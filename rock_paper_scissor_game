@@ -1,0 +1,86 @@
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#   rock paper scissor game
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+import random
+while True:                                                              # Outer loop to restart the game if the player wants to play again
+
+    while True:                                                          # Get the "Best of" input from the player
+        try:
+            best_of = int(input("Enter the 'Best of' number (must be an odd number): "))
+            if best_of % 2 == 0:
+                print("Please enter an odd number.")
+            else:
+                break
+        except ValueError:
+            print("Please enter a valid number.")
+
+    rounds_to_win = (best_of // 2) + 1
+    player_score = 0
+    computer_score = 0
+    tie_score = 0
+    total_rounds = 0
+
+    while total_rounds<best_of:                                                         # An inner loop to handle rounds within the game and ensure the game only plays up to the best_of number of rounds
+        total_rounds += 1
+        print("Round: "+str(total_rounds))
+        choices =   ["rock","paper","scissor"]
+        computer    =   random.choice(choices)
+        player = None
+        while   player not in choices:
+            player  =   input("rock,paper,scissor?: ").lower()         #even if we type in UPPER case, the input is treated as lower case
+        if player==computer:
+            print("computer: ",computer)
+            print("player: ",player)
+            print("Tie!")
+            tie_score +=1
+        elif player=="rock":
+            if computer=="paper":
+                print("computer: ", computer)
+                print("player: ", player)
+                print("You lose!")
+                computer_score += 1
+            if computer=="scissor":
+                print("computer: ", computer)
+                print("player: ", player)
+                print("You win!")
+                player_score += 1
+        elif player=="scissor":
+            if computer=="rock":
+                print("computer: ", computer)
+                print("player: ", player)
+                print("You lose!")
+                computer_score += 1
+            if computer=="paper":
+                print("computer: ", computer)
+                print("player: ", player)
+                print("You win!")
+                player_score += 1
+        elif player == "paper":
+            if computer == "scissor":
+                print("computer: ", computer)
+                print("player: ", player)
+                print("You lose!")
+                computer_score += 1
+            if computer == "rock":
+                print("computer: ", computer)
+                print("player: ", player)
+                print("You win!")
+                player_score += 1
+        print("Score -> You: "+str(player_score)+" | Computer: "+str(computer_score)+" | Tie: "+str(tie_score))
+        print("-" * 30)
+
+        if player_score == rounds_to_win or computer_score == rounds_to_win:
+            break
+    if player_score > computer_score:
+        print("Congratulations! You won the game by " + str(player_score) + " to " + str(computer_score) + "!")
+    elif computer_score > player_score:
+        print("Sorry, the computer won the game by " + str(computer_score) + " to " + str(player_score) + ".")
+    elif total_rounds == 1:
+         print("Scores level!!!\nThe game is a tie after "+str(total_rounds)+" round.")
+    else:
+        print("Scores level!!!\nThe game is a tie after " + str(total_rounds) + " rounds.")
+    print("Total Rounds Played: "+str(total_rounds))
+    play_again = input("Would you like to play again? (yes/no): ").lower()
+    if play_again != "yes":
+        print("Thank you for playing.\nBye!")
+        break                                                               # To exit the outer loop and end the program
